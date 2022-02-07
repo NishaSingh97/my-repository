@@ -12,6 +12,7 @@ view: title_names {
   # This dimension will be called "Birth Year" in Explore.
 
   dimension: birth_year {
+    description: "birth year in YYYY format"
     type: number
     sql: ${TABLE}."BIRTH_YEAR" ;;
   }
@@ -20,43 +21,49 @@ view: title_names {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_birth_year {
-    type: sum
-    sql: ${birth_year} ;;
-  }
+  # measure: total_birth_year {
+  #   type: sum
+  #   sql: ${birth_year} ;;
+  # }
 
-  measure: average_birth_year {
-    type: average
-    sql: ${birth_year} ;;
-  }
+  # measure: average_birth_year {
+  #   type: average
+  #   sql: ${birth_year} ;;
+  # }
 
   dimension: death_year {
+    description: "death year in YYYY format if applicable, else '\N'"
     type: number
     sql: ${TABLE}."DEATH_YEAR" ;;
   }
 
   dimension: known_for_titles {
+    description: "titles the person is known for"
     type: string
     sql: ${TABLE}."KNOWN_FOR_TITLES" ;;
   }
 
   dimension: nconst {
+    primary_key: yes
+    description: "alphanumeric unique identifier of the name/person"
     type: string
     sql: ${TABLE}."NCONST" ;;
   }
 
   dimension: primary_name {
+    description: "name by which the person is most often credited"
     type: string
     sql: ${TABLE}."PRIMARY_NAME" ;;
   }
 
   dimension: primary_profession {
+    description: " the top-3 professions of the person"
     type: string
     sql: ${TABLE}."PRIMARY_PROFESSION" ;;
   }
 
   measure: count {
     type: count
-    drill_fields: [primary_name]
+    drill_fields: []
   }
 }

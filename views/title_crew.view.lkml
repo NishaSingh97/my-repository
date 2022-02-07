@@ -1,5 +1,5 @@
 # The name of this view in Looker is "Crew"
-view: crew {
+view: title_crew {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: "FIRST_SCHEMA"."CREW"
@@ -12,16 +12,20 @@ view: crew {
   # This dimension will be called "Directors" in Explore.
 
   dimension: directors {
+    description: "director(s) of the given title"
     type: string
     sql: ${TABLE}."DIRECTORS" ;;
   }
 
   dimension: tconst {
+    primary_key: yes
+    description: "alphanumeric unique identifier of the title"
     type: string
     sql: ${TABLE}."TCONST" ;;
   }
 
   dimension: writers {
+    description: "writer(s) of the given title"
     type: string
     sql: ${TABLE}."WRITERS" ;;
   }

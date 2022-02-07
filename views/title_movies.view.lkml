@@ -1,27 +1,43 @@
-# The name of this view in Looker is "Title Basic"
-view: title_basic {
+# The name of this view in Looker is "Title Basic Updated"
+view: title_movies {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: "FIRST_SCHEMA"."TITLE_BASIC"
+  sql_table_name: "FIRST_SCHEMA"."TITLE_BASIC_UPDATED"
     ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "End Year" in Explore.
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension: end_year {
-    type: string
+  dimension_group: end_year {
+    description: "TV Series end year. ‘\N’ for all other title types"
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}."END_YEAR" ;;
   }
 
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Genres" in Explore.
+
   dimension: genres {
+    description: "includes up to three genres associated with the title"
     type: string
     sql: ${TABLE}."GENRES" ;;
   }
 
   dimension: is_adult {
+    description: "0: non-adult title; 1: adult title"
     type: number
     sql: ${TABLE}."IS_ADULT" ;;
   }
@@ -41,51 +57,56 @@ view: title_basic {
   }
 
   dimension: original_title {
+    description: "original title, in the original language"
     type: string
     sql: ${TABLE}."ORIGINAL_TITLE" ;;
   }
 
   dimension: primary_title {
+    description: "the more popular title / the title used by the filmmakers on promotional materials at the point of release"
     type: string
     sql: ${TABLE}."PRIMARY_TITLE" ;;
+    drill_fields: [primary_title,genres,is_adult,start_year_year,end_year_year,run_time_minutes]
   }
 
   dimension: run_time_minutes {
+    description: "primary runtime of the title, in minutes"
     type: number
     sql: ${TABLE}."RUN_TIME_MINUTES" ;;
   }
 
-  dimension: start_year {
-    type: number
+  dimension_group: start_year {
+    description: "represents the release year of a title. In the case of TV Series, it is the series start year"
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}."START_YEAR" ;;
   }
 
   dimension: tconst {
+    primary_key: yes
+    description: "alphanumeric unique identifier of the title"
     type: string
     sql: ${TABLE}."TCONST" ;;
   }
 
   dimension: title_type {
+    description: "the type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc)"
     type: string
     sql: ${TABLE}."TITLE_TYPE" ;;
   }
 
   measure: count {
-    type: count_distinct
-    drill_fields: [tconst,primary_title,genres,start_year,end_year,run_time_minutes]
+    description: "number of unique identifier of the title"
+    type: count
+    drill_fields: []
   }
-
-  dimension: date_diff_year {
-    type: number
-    label: "By Year"
-    group_label: "Difference"
-    sql: DATEDIFF( year, ${end_year}, ${start_year}) ;;
-  }
-
-  # dimension_group: event {
-  #   convert_tz: no
-  #   type: time
-  #   timeframes: [time, date, hour, time_of_day, hour_of_day, week, day_of_week_index, day_of_week, month, year]
-  #   sql: ${TABLE}.created_at ;;
-  # }
 }
