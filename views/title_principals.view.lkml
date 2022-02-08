@@ -51,6 +51,7 @@ view: title_principals {
   }
 
   dimension: tconst {
+    primary_key: yes
     type: string
     sql: ${TABLE}."TCONST" ;;
   }

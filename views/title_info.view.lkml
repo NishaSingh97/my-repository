@@ -56,6 +56,7 @@ view: title_info {
   }
 
   dimension: title_id {
+    primary_key: yes
     type: string
     sql: ${TABLE}."TITLE_ID" ;;
   }

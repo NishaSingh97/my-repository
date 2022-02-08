@@ -41,6 +41,7 @@ view: title_episode {
   }
 
   dimension: tconst {
+    primary_key: yes
     type: string
     sql: ${TABLE}."TCONST" ;;
   }
