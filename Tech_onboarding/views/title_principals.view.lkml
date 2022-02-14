@@ -27,6 +27,7 @@ view: title_principals {
   }
 
   dimension: nconst {
+    primary_key: yes
     type: string
     sql: ${TABLE}."NCONST" ;;
   }
@@ -51,10 +52,11 @@ view: title_principals {
   }
 
   dimension: tconst {
-    primary_key: yes
     type: string
     sql: ${TABLE}."TCONST" ;;
   }
+
+ #####################################
 
   measure: count {
     type: count

@@ -2,7 +2,8 @@
 connection: "tech_onboarding"
 
 # include all the views
-include: "/views/**/*.view"
+include: "/Tech_onboarding/views/**/*.view"
+
 
 # Datagroups define a caching policy for an Explore. To learn more,
 # use the Quick Help panel on the right to see documentation.
@@ -43,8 +44,8 @@ explore: title_ratings {
     relationship: one_to_many
   }
   join: title_episode {
-    sql_on: ${title_ratings.tconst} = ${title_episode.tconst} ;;
-    relationship: one_to_one
+    sql_on:${title_movies.tconst} = ${title_episode.parent_tconst};;
+    relationship: one_to_many
   }
   join: title_info {
     sql_on: ${title_ratings.tconst} = ${title_info.title_id} ;;

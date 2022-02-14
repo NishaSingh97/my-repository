@@ -20,15 +20,23 @@ view: title_episode {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_episode_number {
-    type: sum
-    sql: ${episode_number} ;;
-  }
-
-  measure: average_episode_number {
-    type: average
-    sql: ${episode_number} ;;
-  }
+  # measure: total_episode_number {
+  #   type: count
+  #   sql: ${episode_number} ;;
+  # }
+  # measure: total_seasons {
+  #   type: count_distinct
+  #   sql: ${season_number} ;;
+  # }
+  # measure: average_episode_number {
+  #   type: number
+  #   sql: CASE
+  #         WHEN ${total_seasons} = 0
+  #         THEN 0
+  #         ELSE
+  #         ${total_episode_number}/${total_seasons}
+  #         END;;
+  # }
 
   dimension: parent_tconst {
     type: string
@@ -45,6 +53,8 @@ view: title_episode {
     type: string
     sql: ${TABLE}."TCONST" ;;
   }
+
+ #####################################
 
   measure: count {
     type: count

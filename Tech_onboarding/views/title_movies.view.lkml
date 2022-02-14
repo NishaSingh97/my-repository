@@ -104,6 +104,33 @@ view: title_movies {
     sql: ${TABLE}."TITLE_TYPE" ;;
   }
 
+  dimension: type_movie_tvseries {
+    case: {
+      when: {
+        sql: ${title_type} IN ('tvSeries','tvEpisodes','tvMiniSeries') ;;
+        label: "Series"
+      }
+      when: {
+        sql: ${title_type} IN ('movie','tvMovies','tvSpecial','tvShort') ;;
+        label: "Movies"
+      }
+      when: {
+        sql: ${title_type} IN ('video','short') ;;
+        label: "video"
+      }
+      else: "VideoGames"
+    }
+  }
+
+dimension: is_tv_series {
+  type: yesno
+    sql: ${title_type} IN ('tvSeries','tvEpisodes','tvMiniSeries') ;;
+hidden: yes
+}
+
+
+ #####################################
+
   measure: count {
     description: "number of unique identifier of the title"
     type: count

@@ -47,8 +47,16 @@ view: title_info {
 
   dimension: region {
     type: string
+    map_layer_name: countries
     sql: ${TABLE}."REGION" ;;
   }
+
+  # dimension: region_map {
+  #   type: location
+  #   map_layer_name: countries
+  #   sql: ${region} ;;
+  #   hidden: yes
+  # }
 
   dimension: title {
     type: string
@@ -65,6 +73,8 @@ view: title_info {
     type: string
     sql: ${TABLE}."TYPES" ;;
   }
+
+ #####################################
 
   measure: count {
     type: count
