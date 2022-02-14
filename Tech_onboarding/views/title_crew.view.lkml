@@ -32,8 +32,8 @@ view: title_crew {
 
 #####################################
 
-  measure: count {
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 }

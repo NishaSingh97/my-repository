@@ -122,18 +122,18 @@ view: title_movies {
     }
   }
 
-dimension: is_tv_series {
-  type: yesno
-    sql: ${title_type} IN ('tvSeries','tvEpisodes','tvMiniSeries') ;;
-hidden: yes
-}
+  dimension: is_tv_series {
+    type: yesno
+      sql: ${title_type} IN ('tvSeries','tvEpisodes','tvMiniSeries') ;;
+  hidden: yes
+  }
 
 
  #####################################
 
-  measure: count {
-    description: "number of unique identifier of the title"
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   description: "number of unique identifier of the title"
+  #   type: count
+  #   drill_fields: []
+  # }
 }

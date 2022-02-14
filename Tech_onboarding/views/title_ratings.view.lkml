@@ -78,9 +78,9 @@ view: title_ratings {
 
  #####################################
 
-  measure: count {
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 
 }

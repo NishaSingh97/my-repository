@@ -13,11 +13,13 @@ view: title_info {
 
   dimension: attributes {
     type: string
+    description: "Additional terms to describe this alternative title, not enumerated"
     sql: ${TABLE}."ATTRIBUTES" ;;
   }
 
   dimension: isoriginaltitle {
     type: number
+    description: "0: not original title; 1: original title"
     sql: ${TABLE}."ISORIGINALTITLE" ;;
   }
 
@@ -37,17 +39,20 @@ view: title_info {
 
   dimension: language {
     type: string
+    description: "the language of the title"
     sql: ${TABLE}."LANGUAGE" ;;
   }
 
   dimension: ordering {
     type: number
+    description: "a number to uniquely identify rows for a given titleId"
     sql: ${TABLE}."ORDERING" ;;
   }
 
   dimension: region {
     type: string
     map_layer_name: countries
+    description: " the region for this version of the title"
     sql: ${TABLE}."REGION" ;;
   }
 
@@ -60,24 +65,27 @@ view: title_info {
 
   dimension: title {
     type: string
+    description: "the localized title"
     sql: ${TABLE}."TITLE" ;;
   }
 
   dimension: title_id {
     primary_key: yes
     type: string
+    description: "a tconst, an alphanumeric unique identifier of the title"
     sql: ${TABLE}."TITLE_ID" ;;
   }
 
   dimension: types {
     type: string
+    description: "set of attributes for this alternative title. One or more of the following: 'alternative', 'dvd', 'festival', 'tv', 'video', 'working', 'original', imdbDisplay."
     sql: ${TABLE}."TYPES" ;;
   }
 
  #####################################
 
-  measure: count {
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 }

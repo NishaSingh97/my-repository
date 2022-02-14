@@ -13,7 +13,7 @@ view: title_episode {
 
   dimension: episode_number {
     type: number
-    label: "episode number of the tconst in the TV series"
+    description: "episode number of the tconst in the TV series"
     sql: ${TABLE}."EPISODE_NUMBER" ;;
   }
 
@@ -41,27 +41,27 @@ view: title_episode {
 
   dimension: parent_tconst {
     type: string
-    label: "alphanumeric identifier of the parent TV Series"
+    description: "alphanumeric identifier of the parent TV Series"
     sql: ${TABLE}."PARENT_TCONST" ;;
   }
 
   dimension: season_number {
     type: number
-    label: "season number the episode belongs to"
+    description: "season number the episode belongs to"
     sql: ${TABLE}."SEASON_NUMBER" ;;
   }
 
   dimension: tconst {
     primary_key: yes
     type: string
-    label: "alphanumeric identifier of episode"
+    description: "alphanumeric identifier of episode"
     sql: ${TABLE}."TCONST" ;;
   }
 
  #####################################
 
-  measure: count {
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 }

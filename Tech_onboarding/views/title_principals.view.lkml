@@ -13,33 +13,51 @@ view: title_principals {
 
   dimension: category {
     type: string
+    description: "the category of job that person was in"
     sql: ${TABLE}."CATEGORY" ;;
   }
 
   dimension: characters {
     type: string
+    description: "the name of the character played if applicable, else '\N'"
     sql: ${TABLE}."CHARACTERS" ;;
   }
 
   dimension: job {
     type: string
+    description: "the specific job title if applicable, else '\N'"
     sql: ${TABLE}."JOB" ;;
   }
 
   dimension: nconst {
     primary_key: yes
     type: string
+    description: "alphanumeric unique identifier of the name/person"
     sql: ${TABLE}."NCONST" ;;
   }
 
   dimension: ordering {
     type: number
+    description: "a number to uniquely identify rows for a given titleId"
     sql: ${TABLE}."ORDERING" ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  dimension: tconst {
+    type: string
+    description: "alphanumeric unique identifier of the title"
+    sql: ${TABLE}."TCONST" ;;
+  }
+
+ #####################################
+
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 
   measure: total_ordering {
     type: sum
@@ -49,17 +67,5 @@ view: title_principals {
   measure: average_ordering {
     type: average
     sql: ${ordering} ;;
-  }
-
-  dimension: tconst {
-    type: string
-    sql: ${TABLE}."TCONST" ;;
-  }
-
- #####################################
-
-  measure: count {
-    type: count
-    drill_fields: []
   }
 }

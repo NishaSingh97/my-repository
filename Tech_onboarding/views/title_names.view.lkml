@@ -64,8 +64,8 @@ view: title_names {
 
    #####################################
 
-  measure: count {
-    type: count
-    drill_fields: []
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: []
+  # }
 }
