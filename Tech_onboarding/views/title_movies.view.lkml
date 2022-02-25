@@ -67,6 +67,7 @@ view: title_movies {
     type: string
     sql: ${TABLE}."PRIMARY_TITLE" ;;
     drill_fields: [primary_title,genres,is_adult,start_year_year,end_year_year,run_time_minutes]
+
   }
 
   dimension: run_time_minutes {
@@ -96,8 +97,11 @@ view: title_movies {
     description: "alphanumeric unique identifier of the title"
     type: string
     sql: ${TABLE}."TCONST" ;;
+    html: <a href='https://www.imdb.com/title/{{value}}/' target='_blank'><span  style="color:blue">{{primary_title._value}}</span></a> ;;
+    #link: {
+     # label:"imdb"
+     # url:"https://www.imdb.com/title/{{value}}/"}
   }
-
   dimension: title_type {
     description: "the type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc)"
     type: string
@@ -128,6 +132,13 @@ view: title_movies {
   hidden: yes
   }
 
+  measure: current_number_of_movies{
+    type: sum
+    sql:  ${tconst} ;;
+    filters: {field: start_year_year value: "this year"}
+    # value_format: "[<995]0;[<999950]0.0,\"K\";[<999950000]0.0,,\"M\";0.00,,,\"B\""
+    drill_fields: [primary_title,genres,title_type,run_time_minutes]
+  }
 
  #####################################
 

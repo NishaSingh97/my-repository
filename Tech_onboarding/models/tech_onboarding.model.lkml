@@ -25,7 +25,7 @@ persist_with: tech_onboarding_default_datagroup
 # To create more sophisticated Explores that involve multiple views, you can use the join parameter.
 # Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
 # Each joined view also needs to define a primary key.
-
+explore: header {}
 explore: title_ratings {
   join: title_movies {
     sql_on: ${title_ratings.tconst} = ${title_movies.tconst} ;;
@@ -51,4 +51,9 @@ explore: title_ratings {
     sql_on: ${title_ratings.tconst} = ${title_info.title_id} ;;
     relationship: one_to_many
   }
+  join: ranking {
+    sql_on: ${title_movies.tconst} = ${ranking.TCONST} ;;
+    relationship: one_to_one
+  }
+
 }
