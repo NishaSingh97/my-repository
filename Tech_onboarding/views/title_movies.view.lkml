@@ -34,7 +34,6 @@ view: title_movies {
     description: "includes up to three genres associated with the title"
     type: string
     sql: ${TABLE}."GENRES" ;;
-    drill_fields: [tconst,genres,is_adult,start_year_year,run_time_minutes]
   }
 
   dimension: is_adult {
