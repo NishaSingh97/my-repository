@@ -34,7 +34,7 @@ view: title_movies {
     description: "includes up to three genres associated with the title"
     type: string
     sql: ${TABLE}."GENRES" ;;
-    drill_fields: [tconst,genres,is_adult,start_year_year,end_year_year,run_time_minutes]
+    drill_fields: [tconst,genres,is_adult,start_year_year,run_time_minutes]
   }
 
   dimension: is_adult {
@@ -70,14 +70,7 @@ view: title_movies {
     description: "represents the release year of a title. In the case of TV Series, it is the series start year"
     type: time
     label: "Year"
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}."START_YEAR" ;;
@@ -87,7 +80,6 @@ view: title_movies {
     primary_key: yes
     description: "alphanumeric unique identifier of the title"
     type: string
-    drill_fields: [tconst,genres,title_type,start_year_year,run_time_minutes]
     sql: ${TABLE}."TCONST" ;;
     html: <a href='https://www.imdb.com/title/{{value}}/' target='_blank'><span  style="color:blue">{{primary_title._value}}</span></a> ;;
     #link: {
@@ -161,6 +153,7 @@ view: title_movies {
   measure: count_tconst {
     type:count_distinct
     sql: ${tconst} ;;
+    drill_fields: [tconst,genres,title_type,start_year_year,run_time_minutes]
     label: "No. of Movies"
     html: <p>{{value}} Movies in the year <span>{{start_year_year._value}}</span></p> ;;
   }
