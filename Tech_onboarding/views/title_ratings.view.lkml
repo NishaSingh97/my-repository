@@ -61,12 +61,15 @@ view: title_ratings {
     value_format: "0.0"
     type: average
     sql: ${average_ratings} ;;
+    html: <p>{{value}} Average Rating for the Genre <span>{{title_movies.genre._value}}</span></p> ;;
   }
 
   dimension: num_votes {
     description: "number of votes the title has received"
     type: number
     sql: ${TABLE}."NUM_VOTES" ;;
+    drill_fields: [tconst, title_movies.genres, average_average_ratings ]
+
   }
 
   dimension: tconst {

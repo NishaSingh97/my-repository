@@ -34,6 +34,7 @@ view: title_movies {
     description: "includes up to three genres associated with the title"
     type: string
     sql: ${TABLE}."GENRES" ;;
+    drill_fields: [tconst,genres,is_adult,start_year_year,end_year_year,run_time_minutes]
   }
 
   dimension: is_adult {
@@ -46,16 +47,6 @@ view: title_movies {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_is_adult {
-    type: sum
-    sql: ${is_adult} ;;
-  }
-
-  measure: average_is_adult {
-    type: average
-    sql: ${is_adult} ;;
-  }
-
   dimension: original_title {
     description: "original title, in the original language"
     type: string
@@ -67,7 +58,6 @@ view: title_movies {
     type: string
     sql: ${TABLE}."PRIMARY_TITLE" ;;
     drill_fields: [primary_title,genres,is_adult,start_year_year,end_year_year,run_time_minutes]
-
   }
 
   dimension: run_time_minutes {
@@ -79,6 +69,7 @@ view: title_movies {
   dimension_group: start_year {
     description: "represents the release year of a title. In the case of TV Series, it is the series start year"
     type: time
+    label: "Year"
     timeframes: [
       raw,
       date,
@@ -96,6 +87,7 @@ view: title_movies {
     primary_key: yes
     description: "alphanumeric unique identifier of the title"
     type: string
+    drill_fields: [tconst,genres,title_type,start_year_year,run_time_minutes]
     sql: ${TABLE}."TCONST" ;;
     html: <a href='https://www.imdb.com/title/{{value}}/' target='_blank'><span  style="color:blue">{{primary_title._value}}</span></a> ;;
     #link: {
@@ -132,14 +124,6 @@ view: title_movies {
   hidden: yes
   }
 
-  measure: current_number_of_movies{
-    type: sum
-    sql:  ${tconst} ;;
-    filters: {field: start_year_year value: "this year"}
-    # value_format: "[<995]0;[<999950]0.0,\"K\";[<999950000]0.0,,\"M\";0.00,,,\"B\""
-    drill_fields: [primary_title,genres,title_type,run_time_minutes]
-  }
-
  #####################################
 
   # measure: count {
@@ -147,4 +131,37 @@ view: title_movies {
   #   type: count
   #   drill_fields: []
   # }
+
+  measure: total_is_adult {
+    type: sum
+    sql: ${is_adult} ;;
+  }
+
+  measure: average_is_adult {
+    type: average
+    sql: ${is_adult} ;;
+  }
+
+  measure: current_number_of_movies{
+    type: count_distinct
+    sql:  ${tconst} ;;
+    filters: [ start_year_year: "2020,2021"]
+    # value_format: "[<995]0;[<999950]0.0,\"K\";[<999950000]0.0,,\"M\";0.00,,,\"B\""
+    drill_fields: [tconst,genres,title_type,run_time_minutes]
+  }
+
+  measure: pre_pandemic_number_of_movies{
+    type: count_distinct
+    sql:  ${tconst} ;;
+    filters: [ start_year_year: "2018,2019"]
+    # value_format: "[<995]0;[<999950]0.0,\"K\";[<999950000]0.0,,\"M\";0.00,,,\"B\""
+    drill_fields: [tconst,genres,title_type,run_time_minutes]
+  }
+
+  measure: count_tconst {
+    type:count_distinct
+    sql: ${tconst} ;;
+    label: "No. of Movies"
+    html: <p>{{value}} Movies in the year <span>{{start_year_year._value}}</span></p> ;;
+  }
 }

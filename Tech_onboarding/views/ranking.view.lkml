@@ -37,6 +37,7 @@ where "NUM_VOTES" > {%parameter choose_threshold%}
   dimension: NUM_VOTES {
     type: number
     label: "No. of votes"
+    drill_fields: [title_movies.tconst,title_movies.genres,title_movies.start_year_year,average_average_ratings ]
   }
   dimension: average_ratings{
     type: number
