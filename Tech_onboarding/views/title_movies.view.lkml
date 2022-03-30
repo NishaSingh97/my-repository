@@ -18,9 +18,7 @@ view: title_movies {
       date,
       week,
       month,
-      quarter,
-      year
-    ]
+      quarter,year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}."END_YEAR" ;;
@@ -34,6 +32,23 @@ view: title_movies {
     description: "includes up to three genres associated with the title"
     type: string
     sql: ${TABLE}."GENRES" ;;
+  }
+
+  dimension: genres_v3 {
+    type: string
+    html: <div class="header" style="
+  padding: 60px;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,93,1) 17%, rgba(0,212,255,1) 100%);
+  color: white;
+  font-size: 30px;
+  span.small {
+  font-size: smaller;}">
+  <h1>Movies Insights Dashboard</h1>
+  <p style="background-image: url('bi-procsi des logo.jpeg');">
+  <p><span class="small">Hi Dan, this is my Dashboard !</p>
+  </div> ;;
   }
 
   dimension: is_adult {
@@ -73,7 +88,36 @@ view: title_movies {
     convert_tz: no
     datatype: date
     sql: ${TABLE}."START_YEAR" ;;
+
   }
+
+  dimension_group: linkdashboard {
+    type: time
+    timeframes: [year]
+    datatype: date
+    sql: ${TABLE}."START_YEAR" ;;
+    html: <a href= 'https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}&Choose+Metric=rating'>link to dashboard</a> ;;
+  }
+  dimension: link_dashboard {
+    sql: ${TABLE}."START_YEAR" ;;
+    html: <a href= 'https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}&Choose+Metric={{ _filters['title_ratings.choose_metric'] | url_encode}}'>link to dashboard</a> ;;
+  }
+  # dimension: liktodshboard2 {
+  #   type: string
+  #   sql: EXTRACT(year from  ${TABLE}."START_YEAR") ;;
+  #   link: {
+
+  #     label: "eCommerce Dashboard"
+
+  #     url: "https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}"
+
+  #     icon_url: "https://looker.com/favicon.ico"
+
+  #   }
+  #   html: Link to dashboard ;;
+  # }
+
+
 
   dimension: tconst {
     primary_key: yes
@@ -82,9 +126,10 @@ view: title_movies {
     sql: ${TABLE}."TCONST" ;;
     html: <a href='https://www.imdb.com/title/{{value}}/' target='_blank'><span  style="color:blue">{{primary_title._value}}</span></a> ;;
     #link: {
-     # label:"imdb"
-     # url:"https://www.imdb.com/title/{{value}}/"}
+    # label:"imdb"
+    # url:"https://www.imdb.com/title/{{value}}/"}
   }
+
   dimension: title_type {
     description: "the type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc)"
     type: string

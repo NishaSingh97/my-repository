@@ -41,9 +41,48 @@ view: title_ratings {
           WHEN {% parameter choose_metric %}  = 'rating'
           THEN ${average_average_ratings}
           WHEN {% parameter choose_metric %} = 'votes'
-          THEN SUM(${num_votes})
+          THEN ${total_votes}
           END;;
   }
+
+  # measure: dynamic_measure2 {
+  #   label_from_parameter: choose_metric
+  #   type: number
+  #   value_format: "0.0"
+  #   sql: CASE
+  #         WHEN {% parameter choose_metric %}  = 'rating'
+  #         THEN ${average_average_ratings}
+  #         WHEN {% parameter choose_metric %} = 'votes'
+  #         THEN ${total_votes}
+  #         END;;
+  #   html:
+  #   {% if choose_metric._parameter_value == "'rating'" %}
+  #   <a style="color:black;" href="https://biprocsi.eu.looker.com/dashboards-next/204?Year={{ _filters['titl_movies.start_year_year'] | url_encode }}+to+{{ _filters['titl_movies.end_year_year'] | url_encode }}&Choose+Metric=rating"> {{rendered_value}} </a>
+  #   {% else %}
+  #   <a style="color:black;" href="https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['titl_movies.start_year_year'] | url_encode }}+to+{{ _filters['titl_movies.end_year_year'] | url_encode }}&Choose+Metric={{ _filters['votes'] | url_encode }}"> {{rendered_value}} </a>
+  #   {% endif %};;
+  # }
+
+  # dimension: dynamic_dim {
+  #   label_from_parameter: choose_metric
+  #   type: number
+  #   value_format: "0.0"
+  #   sql:
+  #       {% if choose_metric._parameter_value == "'rating'" %}
+  #         ${average_average_ratings}
+  #       {% elsif choose_metric._parameter_value == "'votes'" %}
+  #         ${total_votes}
+  #       {% else %}
+  #         ${total_votes}
+  #       {% endif %};;
+  #   description: "Dynamic dimension"
+  #   html:
+  #   {% if dynamic_dimension._parameter_value == "'rating'" %}
+  #   <a style="color:black;" href="https://biprocsi.eu.looker.com/dashboards-next/204?Year={{ _filters['start_year'] | url_encode }}+to+{{ _filters['end_year_year'] | url_encode }}&Choose+Metric={{ _filters['rating'] | url_encode }}"> {{rendered_value}} </a>
+  #   {% else %}
+  #   <a style="color:black;" href="https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['start_year'] | url_encode }}+to+{{ _filters['end_year_year'] | url_encode }}&Choose+Metric={{ _filters['rating'] | url_encode }}"> {{rendered_value}} </a>
+  #   {% endif %};;
+  # }
 
   measure: rating_series {
     type: average
@@ -58,9 +97,9 @@ view: title_ratings {
   }
 
   measure: average_average_ratings {
-    value_format: "0.0"
     type: average
     sql: ${average_ratings} ;;
+    value_format: "0.0"
     html: <p>{{value}} Average Rating for the Genre <span>{{title_movies.genre._value}}</span></p> ;;
     drill_fields: [tconst,average_average_ratings]
   }
@@ -75,6 +114,7 @@ view: title_ratings {
     description: "total number of votes the title has received"
     type: sum
     sql: ${num_votes} ;;
+    value_format: "0"
     drill_fields: [tconst,title_movies.genres,average_average_ratings ]
   }
 

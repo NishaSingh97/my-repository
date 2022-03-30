@@ -26,6 +26,7 @@ persist_with: tech_onboarding_default_datagroup
 # Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
 # Each joined view also needs to define a primary key.
 explore: header {}
+explore: header1 {}
 explore: title_ratings {
   join: title_movies {
     sql_on: ${title_ratings.tconst} = ${title_movies.tconst} ;;
