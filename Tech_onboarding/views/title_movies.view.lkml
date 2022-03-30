@@ -88,16 +88,16 @@ view: title_movies {
     convert_tz: no
     datatype: date
     sql: ${TABLE}."START_YEAR" ;;
-
   }
 
-  dimension_group: linkdashboard {
-    type: time
-    timeframes: [year]
-    datatype: date
-    sql: ${TABLE}."START_YEAR" ;;
-    html: <a href= 'https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}&Choose+Metric=rating'>link to dashboard</a> ;;
-  }
+  # dimension_group: linkdashboard {
+  #   type: time
+  #   timeframes: [year]
+  #   datatype: date
+  #   sql: ${TABLE}."START_YEAR" ;;
+  #   html: <a href= 'https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}&Choose+Metric=rating'>link to dashboard</a> ;;
+  # }
+
   dimension: link_dashboard {
     sql: ${TABLE}."START_YEAR" ;;
     html: <a href= 'https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}&Choose+Metric={{ _filters['title_ratings.choose_metric'] | url_encode}}'>link to dashboard</a> ;;
@@ -107,13 +107,8 @@ view: title_movies {
   #   sql: EXTRACT(year from  ${TABLE}."START_YEAR") ;;
   #   link: {
 
-  #     label: "eCommerce Dashboard"
-
   #     url: "https://biprocsi.eu.looker.com/dashboards-next/208?Year={{ _filters['title_movies.start_year_year'] | url_encode}}"
 
-  #     icon_url: "https://looker.com/favicon.ico"
-
-  #   }
   #   html: Link to dashboard ;;
   # }
 
