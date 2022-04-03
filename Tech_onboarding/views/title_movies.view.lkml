@@ -13,12 +13,7 @@ view: title_movies {
   dimension_group: end_year {
     description: "TV Series end year. ‘\N’ for all other title types"
     type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,year]
+    timeframes: [year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}."END_YEAR" ;;
@@ -46,7 +41,6 @@ view: title_movies {
   span.small {
   font-size: smaller;}">
   <h1>Movies Insights Dashboard</h1>
-  <p style="background-image: url('bi-procsi des logo.jpeg');">
   <p><span class="small">Hi Dan, this is my Dashboard !</p>
   </div> ;;
   }
